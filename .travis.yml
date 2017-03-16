@@ -4,6 +4,8 @@
 
 language: groovy
 
+services: docker
+
 jdk:
   - oraclejdk7
 
