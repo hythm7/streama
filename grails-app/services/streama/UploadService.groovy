@@ -17,8 +17,7 @@ class UploadService {
     }
 
     def secondDirectory = Settings.findBySettingsKey('Second Directory')?.value
-    def storage2 = secondDirectory
-    def additionalReadStorages = secondDirectory.split(/\|/)
+    def additionalReadStorages = secondDirectory?.split(/\|/)
 
     if(additionalReadStorages){
       storages.addAll(additionalReadStorages)
@@ -30,8 +29,8 @@ class UploadService {
     return Settings.findBySettingsKey('Local Video Files')?.value
   }
 
-  def upload(request) {
-
+  def upload(request, params = [:]) {
+    log.debug(params)
     def rawFile = request.getFile('file')
     def sha256Hex = DigestUtils.sha256Hex(rawFile.inputStream)
     def index = rawFile.originalFilename.lastIndexOf('.')
@@ -42,19 +41,22 @@ class UploadService {
     java.io.File targetFile = new java.io.File(this.dir.uploadDir, sha256Hex+extension)
     rawFile.transferTo(targetFile)
 
-    File file = createFileFromUpload(sha256Hex, rawFile, extension, originalFilenameNoExt + extension, contentType)
+    File file = createFileFromUpload(sha256Hex, rawFile, extension, originalFilenameNoExt + extension, contentType, params)
 
     return file
   }
 
 
-  def createFileFromUpload(sha256Hex, rawFile, extension, originalFilename, contentType){
+  def createFileFromUpload(sha256Hex, rawFile, extension, originalFilename, contentType, params = [:]){
     def fileInstance = new File(sha256Hex:sha256Hex)
     fileInstance.originalFilename = originalFilename
     fileInstance.contentType = contentType
     fileInstance.extension = extension
     fileInstance.size = rawFile.size
     fileInstance.name = rawFile.name
+    if(params?.isPublic == 'true'){
+      fileInstance.isPublic = true
+    }
     fileInstance.save(failOnError: true)
 
 
@@ -96,6 +98,8 @@ class UploadService {
   }
 
   def getFileSrc(File file){
-    return settingsService.baseUrl  + "/file/serve/" + file.id + file.extension
+    def baseUrl = settingsService.baseUrl
+    baseUrl = baseUrl.replaceAll('/$', '')
+    return baseUrl  + "/file/serve/" + file.id + file.extension
   }
 }

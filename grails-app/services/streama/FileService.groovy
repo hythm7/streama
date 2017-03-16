@@ -20,8 +20,12 @@ class FileService {
     def rangeStart
 
     if(rangeHeader){
-      rangeStart = rangeHeader.split("\\D+")[1].toLong()
-      contentLength = fileLength - rangeStart
+      String[] range = rangeHeader.substring(6).split("-")
+      rangeStart = range[0].toLong()
+      if (range.length == 2)
+        rangeEnd = range[1].toLong()
+
+      contentLength = rangeEnd + 1 - rangeStart
     }
     //add html5 video headers
     response.addHeader("Accept-Ranges", "bytes")
@@ -55,10 +59,13 @@ class FileService {
         }
         response.outputStream.write(buffer, 0, read)
       }
-      fis.close()
     }catch(Exception e){
+//      log.error('caught exception for video playback. ' + e.message)
 //      e.printStackTrace()
 //      e.getCause().printStackTrace()
+    }finally{
+//      response.outputStream.flush()
+      fis.close()
     }
   }
 

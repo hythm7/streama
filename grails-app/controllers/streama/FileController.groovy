@@ -12,6 +12,7 @@ class FileController {
   def uploadService
   def fileService
   def srt2vttService
+  def springSecurityService
 
   def index(){
     def filter = params.filter
@@ -38,7 +39,7 @@ class FileController {
     }
 
     JSON.use('adminFileManager'){
-      respond responseObj
+      render (responseObj as JSON)
     }
   }
 
@@ -111,21 +112,36 @@ class FileController {
   }
 
   def serve() {
-
     if (!params.id) {
       return;
     }
 
     def file = File.get(params.getInt('id'))
     if(!file){
-      render status: NOT_FOUND
+      response.setStatus(BAD_REQUEST.value())
+      render ([messageCode: 'FILE_IN_DB_NOT_FOUND'] as JSON)
+      log.debug('FILE_IN_DB_NOT_FOUND')
+      return
+    }
+
+    if(!file.isPublic && !springSecurityService.isLoggedIn()){
+      response.setStatus(UNAUTHORIZED.value())
+      render ([messageCode: 'UNAUTHORIZED'] as JSON)
+      log.debug('UNAUTHORIZED')
       return
     }
 
     def filePath = uploadService.getPath(file)
 
     if(!filePath){
-      render status: NOT_FOUND
+      response.setStatus(NOT_ACCEPTABLE.value())
+      render ([messageCode: 'FILE_IN_FS_NOT_FOUND', data: file.sha256Hex] as JSON)
+      log.debug('FILE_IN_FS_NOT_FOUND')
+      return
+    }
+
+    if(request.method == 'HEAD'){
+      render(status: OK)
       return
     }
 
@@ -135,6 +151,7 @@ class FileController {
 
     if(fileService.allowedVideoFormats.contains(file.extension)){
       fileService.serveVideo(request, response, rawFile, file)
+      return null
     }else if(file.extension == '.srt'){
       def vttResult = srt2vttService.convert(rawFile)
       render ( file: vttResult.getBytes('utf-8'), contentType: file.contentType, fileName: file.originalFilename.replace('.srt', '.vtt'))
@@ -145,7 +162,7 @@ class FileController {
   }
 
   def upload(){
-    def file = uploadService.upload(request)
+    def file = uploadService.upload(request, params)
     respond file
   }
 
