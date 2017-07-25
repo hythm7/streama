@@ -54,6 +54,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		PROFILE_SETTINGS: 'Configurações do Perfil',
 		LOGOUT: 'Sair',
 		CHANGE_PASSWORD: 'Mudar Senha',
+		LANGUAGE_ar: 'Arabic',
 		LANGUAGE_en: 'Inglês',
 		LANGUAGE_de: 'Alemão',
 		LANGUAGE_fr: 'Francês',

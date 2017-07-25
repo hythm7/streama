@@ -44,3 +44,4 @@
 /classes
 /build
 *.log
+.gradle

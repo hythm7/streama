@@ -50,6 +50,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		LOGOUT: 'Déconnexion',
 		CHANGE_PASSWORD: 'Modifier le mot de passe',
 		LANGUAGE_en: 'Angais',
+		LANGUAGE_ar: 'Arabic',
 		LANGUAGE_de: 'Allemand',
 		LANGUAGE_fr: 'Français',
 		LANGUAGE_es: 'Espagnol',

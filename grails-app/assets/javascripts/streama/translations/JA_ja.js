@@ -52,6 +52,7 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		PROFILE_SETTINGS: 'プロファイルの設定',
 		LOGOUT: 'ログアウト',
 		CHANGE_PASSWORD: 'パスワードを変更します',
+		LANGUAGE_ar: 'Arabic',
 		LANGUAGE_en: '英語',
 		LANGUAGE_de: 'ドイツ語',
 		LANGUAGE_fr: 'フランス語',

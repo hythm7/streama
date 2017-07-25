@@ -3,30 +3,30 @@
  * Created by antonia on 14/05/16.
  */
 angular.module('streama.translations').config(function ($translateProvider) {
-	$translateProvider.translations('en', {
+	$translateProvider.translations('ar', {
 		LOGIN: {
-			TITLE: 'Please Login',
-			USERNAME: 'Username',
-			PASSWORD: 'Password',
+			TITLE: 'ادخل يا معلم',
+			USERNAME: 'الاسم',
+			PASSWORD: 'اللي بالي بالك',
 			FIRST_TIME_HINT: 'First time logging in? Try \'admin\' for both fields.',
-			SUBMIT: 'Login'
+			SUBMIT: 'شغال'
 		},
 		DASHBOARD: {
 			TITLE: 'Dashboard',
-			RECOMMENDATIONS: 'Recommendations for you',
-			NEW_RELEASES: 'New Releases',
-			CONTINUE_WATCHING: 'Continue Watching',
+			RECOMMENDATIONS: 'شوف دا يا برنس',
+			NEW_RELEASES: 'جديد',
+			CONTINUE_WATCHING: 'مش هنكمل دول؟',
 			DISCOVER_SHOWS: 'Discover Shows',
 			DISCOVER_MOVIES: 'Discover Movies',
 			DISCOVER_OTHER_VIDEOS: 'Discover other videos',
 			SORT: 'Sort:',
-			SEARCH_BY_NAME: 'Search by Name...',
+			SEARCH_BY_NAME: 'شوف هنا...',
 			FILTER_BY_TAG: 'Filter by Tag...',
 			BROWSE_GENRES: 'Browse',
 			LOOKING_AT_GENRE: 'You\'re looking at the genre:',
-			MARK_COMPLETED: 'Mark completed',
-			NO_TVSHOWS_FOUND: 'No Tv-Shows Available',
-			NO_MOVIES_FOUND: 'No Movies Available'
+			MARK_COMPLETED: 'شفته قبل كده يا برنس',
+			NO_TVSHOWS_FOUND: 'ولا الهوا',
+			NO_MOVIES_FOUND: 'ولا الهوا'
 		},
 		VIDEO: {
 			RELEASED: 'Released',
@@ -54,8 +54,8 @@ angular.module('streama.translations').config(function ($translateProvider) {
 		PROFILE_SETTINGS: 'Profile Settings',
 		LOGOUT: 'Logout',
 		CHANGE_PASSWORD: 'Change Password',
-		LANGUAGE_en: 'English',
 		LANGUAGE_ar: 'Arabic',
+		LANGUAGE_en: 'English',
 		LANGUAGE_de: 'German',
 		LANGUAGE_fr: 'French',
 		LANGUAGE_es: 'Spanish',
