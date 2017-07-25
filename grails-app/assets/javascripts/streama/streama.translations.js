@@ -6,7 +6,7 @@
 angular.module('streama.translations', ['pascalprecht.translate'])
 	.config(function ($translateProvider) {
 		$translateProvider.determinePreferredLanguage();
-		$translateProvider.fallbackLanguage('en');
+		$translateProvider.fallbackLanguage('ar');
 	})
 
 	.run(function ($rootScope) {
